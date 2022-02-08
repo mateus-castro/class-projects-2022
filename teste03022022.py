@@ -7,9 +7,10 @@
 # print(f"id do objeto l depois de ter o objeto d atribuido à ele -> {id(l)}")
 
 testString="meu nome é mateus castrooooooo"
+concating="adicionado"
 
 print(testString [11:17]) # pega a string dos caracteres 11 ao 17
 print(testString [18:25])
 print(testString[::]) # se refere à string inteira
-print(f"{testString[6:10:8]}") # tendi não, dps tem que ver
+print(testString[6:10:8] + concating) # concatenar string
 print(len(testString)) # tamanho da string
