@@ -7,3 +7,5 @@ def string_split(str):
     return arr
 
 print(string_split('teste'))
+
+print(round(20.345, 0))
