@@ -11,7 +11,7 @@ def generate_data(connection):
     stop = randint(0, 10000)
     step = randint(int(math.floor(stop*.05)), int(math.floor(stop*.25)))
     
-    print("generating data -> start: %d | stop: %d | step: %d"  % (start, stop, step))
+    print("[Generating Data] Start: %d | Stop: %d | Step: %d"  % (start, stop, step))
 
     # execução do algoritmo com estrutura 'while'
     cont_while = 0
@@ -35,6 +35,6 @@ def generate_data(connection):
     with connection.cursor() as cursor:
         sql = "INSERT INTO `datas` VALUES (null, %s, %s, %s, %s, %s, %s, %s), (null, %s, %s, %s, %s, %s, %s, %s);"
         cursor.execute(sql, (str((dt_fim_while - dt_inicio_while).total_seconds()).replace(".", ","), str(size_while), str(cont_while), "projeto_algas_while", stop, step, str(moment.now()), str((dt_fim_for - dt_inicio_for).total_seconds()).replace(".", ","), str(size_for), str(cont_for), "projeto_algas_for", stop, step, str(moment.now())))
-        print("data insert was successfully")       
+        print("[DB Connection] Data was inserted successfully")       
     connection.commit()
     cursor.close()

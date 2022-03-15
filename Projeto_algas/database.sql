@@ -3,8 +3,11 @@ USE test_script;
 
 CREATE TABLE datas (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    tempo_execucao VARCHAR(25),
-    espaco_alocado VARCHAR(25),
-    quantidade_iteracoes VARCHAR(25),
-    script VARCHAR(25)
+    execution_time VARCHAR(25),
+    allocation_size VARCHAR(25),
+    iterations_quantity VARCHAR(25),
+    script VARCHAR(25),
+    range_limit VARCHAR(10),
+    step VARCHAR(10),
+    created_time VARCHAR(30)
 );
