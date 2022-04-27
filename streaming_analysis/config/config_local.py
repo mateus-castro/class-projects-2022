@@ -1,9 +1,9 @@
 import pymysql.cursors
 
 connection=pymysql.connect(
-    user= 'aluno',
+    user= 'root',
     host= 'localhost',
-    password= 'sptech',
+    password= 'root',
     database= 'streaming',
     cursorclass=pymysql.cursors.DictCursor
     )

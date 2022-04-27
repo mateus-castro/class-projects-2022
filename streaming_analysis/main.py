@@ -1,17 +1,19 @@
 import time
+import moment
 import schedule
-from models import UserConfig, ContentConfig
-from algorithmHandler import AlgorithmHandler
+from random import randint
 from config.config_local import connection
+from algorithmHandler import AlgorithmHandler
+
+contentQuery = "GENRE = 'ROMANCE'"
+userQuery = "AGE > 20 and AGE < 35"
+sec=10
+numberOfStreamings = randint(50, 250) # números de usuários assistindo simultâneamente -> vai ser bom pra demonstrar o horário do dia em que as pessoas mais consomem streaming
 
 class ProjetoAlgasMain():
-    sec=3
     print("Streaming Analysis starting...")
     print(f"The algorithms will run every {sec} seconds")
-    algorithmHandler = AlgorithmHandler()
-    user = UserConfig("age", "58")
-    content = ContentConfig("genre", "romance")
-    schedule.every(sec).seconds.do(algorithmHandler.generateHistory, content, user, connection)
+    schedule.every(sec).seconds.do(lambda: AlgorithmHandler.generateHistory(contentQuery, userQuery, numberOfStreamings, connection))
 
     while True:
         schedule.run_pending()

@@ -1,44 +1,51 @@
-class AlgorithmUtils():
-    def __init__(self, connection):
-        self.connection = connection
+import moment
+from random import randint
 
-    def fetchContentResult(self, contentColumn, contentValue):
-        cursor = self.connection.cursor() # TODO testar se passar o cursor como parâmetro funciona
-        cursor.execute(f"SELECT ID FROM CONTENT WHERE {contentColumn} = {contentValue}")
+from pytz import HOUR
+
+class AlgorithmUtils():
+    def __init__(self, bDconnection=''):
+        self.connection = bDconnection
+
+    def fetchContentResult(self, whereSyntax):
+        cursor = self.connection.cursor()
+
+        selectQuery = f"SELECT ID FROM CONTENT WHERE {whereSyntax};"
+        print(selectQuery)
+        cursor.execute(selectQuery)
+
         contentQueryResult = cursor.fetchall()
         cursor.close()
         return contentQueryResult
 
-    def fetchUserResult(self, userColumn, userValue, numberOfStreamings = 1000):
+    def fetchUserResult(self, whereSyntax, numberOfStreamings=1000):
         cursor = self.connection.cursor()
-        cursor.execute(f"SELECT ID FROM CONTENT WHERE {userColumn} = {userValue} LIMIT {numberOfStreamings}")
+
+        selectQuery = f"SELECT ID FROM USER WHERE {whereSyntax} LIMIT {numberOfStreamings};"
+        print(selectQuery)
+        cursor.execute(selectQuery)
+
         userQueryResult = cursor.fetchall()
         cursor.close()
         return userQueryResult
 
     def insertHistory(self, contentIdList, userIdList):
         cursor = self.connection.cursor()
-        insertList = []
-                        # # inserção dos dados no banco
-        # with connection.cursor() as cursor:
-        #     sql = "INSERT INTO `datas` VALUES (null, %s, %s, %s, %s, %s, %s, %s), (null, %s, %s, %s, %s, %s, %s, %s);"
-        #     cursor.execute(sql, (str((dt_fim_while - dt_inicio_while).total_seconds()).replace(".", ","), str(size_while), str(cont_while), "projeto_algas_while", stop, step, str(moment.now()), str((dt_fim_for - dt_inicio_for).total_seconds()).replace(".", ","), str(size_for), str(cont_for), "projeto_algas_for", stop, step, str(moment.now())))
-        #     print("[DB Connection] Data was inserted successfully")       
-        # connection.commit()
-        # cursor.close()
-        cursor.execute(f"INSERT INTO HISTORY VALUES {insertList}")
+        insertList = self.formatDataToInsert(
+            contentIdList, userIdList)
+        insertQuery = f"INSERT INTO HISTORY VALUES {insertList};"
+        print(insertQuery)
+        cursor.execute(insertQuery)
+        self.connection.commit()
+        print("[DB Connection] Data was inserted successfully")
+        cursor.close()
 
+    def formatDataToInsert(self, contentIdList, userIdList):
+        formattedList = "" 
+        for user in userIdList:
+            createTime=moment.date("20/04/2022").replace(hours=randint(0, 10), minutes=randint(0, 59), seconds=randint(0, 59)) # matutino
+            # createTime=moment.date("20/04/2022").replace(hours=randint(11, 17), minutes=randint(0. 59), seconds=randint(0, 59)) # vespertino
+            # createTime=moment.date("20/04/2022").replace(hours=randint(18, 24), minutes=randint(0. 59), seconds=randint(0, 59)) # noturno
+            formattedList += f"(null, {user['ID']}, {contentIdList[randint(0, len(contentIdList)-1)]['ID']}, '{str(randint(0, 100))}', '{str(randint(0, 5))}', '{str(createTime)}'), "
 
-# def size_sum_for(n):
-#     acumulador=0
-#     for i in range(0, n+1):
-#         acumulador += sys.getsizeof(i)
-#     return acumulador
-
-# def size_sum_while(n):
-#     acumulador=0
-#     i=0
-#     while (i in range(0, n+1)):
-#         acumulador += sys.getsizeof(i)
-#         i+=1
-#     return acumulador
+        return formattedList[:-2]

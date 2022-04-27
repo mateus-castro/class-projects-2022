@@ -31,6 +31,7 @@ CREATE TABLE HISTORY (
     CONTENT_ID INT,
     WATCHED_PERCENT VARCHAR(7),
     RATE CHAR(1),
+    CREATED_TIME VARCHAR(40),
     FOREIGN KEY(USER_ID) REFERENCES USER(ID),
     FOREIGN KEY(CONTENT_ID) REFERENCES CONTENT(ID)
 );
@@ -1081,11 +1082,11 @@ INSERT INTO CONTENT VALUES	(null,"Zack and Miri Make a Porno","Romance","The Wei
 								(null,"Music and Lyrics","Romance","Warner Bros.","70","3.64741055","63","$145.90","2007"),
 								(null,"Monte Carlo","Romance","20th Century Fox","50","1.9832","38","$39.66","2011"),
 								(null,"Miss Pettigrew Lives for a Day","Comedy","Independent","70","0.2528949","78","$15.17","2008"),
-								(null,"Midnight in Paris","Romence","Sony","84","8.744705882","93","$148.66","2011"),
+								(null,"Midnight in Paris","Romance","Sony","84","8.744705882","93","$148.66","2011"),
 								(null,"Marley and Me","Comedy","Fox","77","3.746781818","63","$206.07","2008"),
 								(null,"Mamma Mia!","Comedy","Universal","76","9.234453864","53","$609.47","2008"),
 								(null,"Mamma Mia!","Comedy","Universal","76","9.234453864","53","$609.47","2008"),
-								(null,"Made of Honor","Comdy","Sony","61","2.64906835","13","$105.96","2008"),
+								(null,"Made of Honor","Comedy","Sony","61","2.64906835","13","$105.96","2008"),
 								(null,"Love Happens","Drama","Universal","40","2.004444444","18","$36.08","2009"),
 								(null,"Love & Other Drugs","Comedy","Fox","55","1.817666667","48","$54.53","2010"),
 								(null,"Life as We Know It","Comedy","Independent","62","2.530526316","28","$96.16","2010"),
@@ -1114,4 +1115,4 @@ INSERT INTO CONTENT VALUES	(null,"Zack and Miri Make a Porno","Romance","The Wei
 								(null,"A Serious Man","Drama","Universal","64","4.382857143","89","$30.68","2009"),
 								(null,"A Dangerous Method","Drama","Independent","89","0.44864475","79","$8.97","2011"),
 								(null,"27 Dresses","Comedy","Fox","71","5.3436218","40","$160.31","2008"),
-								(null,"(500) Days of Summer","comedy","Fox","81","8.096","87","$60.72","2009");
+								(null,"(500) Days of Summer","comedy","Fox","81","8.096","87","$60.72","2009");                               
