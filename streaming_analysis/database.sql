@@ -37,7 +37,7 @@ CREATE TABLE HISTORY (
 );
 
 -- inserindo massa de dados na tabela de usuários
-INSERT INTO USER VALUES	(null,"Stanley Warren","34","Female","gehi@wobgeko.mc","ST"),
+INSERT INTO USER (ID, NAME, AGE, GENDER, EMAIL, COUNTRY) VALUES	(null,"Stanley Warren","34","Female","gehi@wobgeko.mc","ST"),
 						(null,"Miguel Goodman","20","Female","ogmifdul@vedoh.io","CO"),
 						(null,"Carolyn Reed","64","Female","patwul@haw.mz","AQ"),
 						(null,"Corey Vasquez","60","Male","okude@gu.sc","ER"),
@@ -1039,7 +1039,7 @@ INSERT INTO USER VALUES	(null,"Stanley Warren","34","Female","gehi@wobgeko.mc","
 						(null,"Glenn Tucker","49","Female","tow@nednu.bo","FR");
 					
 -- inserindo massa de dados com alguns títulos
-INSERT INTO CONTENT VALUES	(null,"Zack and Miri Make a Porno","Romance","The Weinstein Company","70","1.747541667","64","$41.94","2008"),
+INSERT INTO CONTENT (ID, TITLE, GENRE, STUDIO, AUDIENCE_SCORE, PROFITABILITY, RATE, WORLDWIDE_GROSS, YEAR) VALUES	(null,"Zack and Miri Make a Porno","Romance","The Weinstein Company","70","1.747541667","64","$41.94","2008"),
 								(null,"Youth in Revolt","Comedy","The Weinstein Company","52","1.09","68","$19.62","2010"),
 								(null,"You Will Meet a Tall Dark Stranger","Comedy","Independent","35","1.211818182","43","$26.66","2010"),
 								(null,"When in Rome","Comedy","Disney","44","0","15","$43.04","2010"),
