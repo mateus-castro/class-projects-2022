@@ -3,7 +3,7 @@ from termcolor import colored
 from algorithm_lexer import AlgLexer
 
 def main():
-    print("Digite uma expressão matemática e o algoritmo irá realizar uma análise léxica do input.")
+    print("Digite uma instrução de código e o algoritmo irá realizar uma análise léxica do input.")
 
     while True:
         inp = input("-> ")
