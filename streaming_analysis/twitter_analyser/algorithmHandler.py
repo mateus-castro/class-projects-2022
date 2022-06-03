@@ -1,5 +1,5 @@
 import moment
-from algorithmUtils import AlgorithmUtils
+from utils.algorithmUtils import AlgorithmUtils
 
 class AlgorithmHandler():
     def generateHistory(contentQuery, userQuery, numberOfStreamings, connection):
