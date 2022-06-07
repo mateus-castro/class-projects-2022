@@ -10,8 +10,7 @@ class TweetSearcher():
         load_dotenv()
         self.token = os.getenv('TOKEN')
         self.search_url = os.getenv('SEARCH_URL')
-
-        # query: parametro pra ver 
+        self.film = query_parameters
         self.query_params = {'query': query_parameters, 'tweet.fields': 'author_id,created_at,geo,in_reply_to_user_id,lang,possibly_sensitive,source', 'max_results': max_results}
 
     def bearer_oauth(self, r):
@@ -30,6 +29,9 @@ class TweetSearcher():
 
     def main(self):
         json_response = self.connect_to_endpoint(self.search_url, self.query_params)
+            
+        for tweet in json_response.get('data'):
+            tweet.update({'content': self.film})
             
         tweets_reacheds = len(json_response.get('data'))
         file_name = datetime.now().timestamp()
