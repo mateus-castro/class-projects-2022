@@ -1,8 +1,7 @@
 import os
-import json
 import time
-import moment
 import schedule
+import boto3
 from datetime import datetime
 from dotenv import load_dotenv
 from log_custom import bcolors
@@ -24,7 +23,7 @@ class Main():
     print(bcolors.GREEN + f'{str(datetime.now())[:-7]} - [Main]' + bcolors.ENDC + ' Tweet Analyzer will run' + bcolors.GREEN + bcolors.BOLD + f' every {analysis_interval} minutes' + bcolors.ENDC)
     print(bcolors.GREEN + f'{str(datetime.now())[:-7]} - [Main]' + bcolors.ENDC + ' Database Update will run' + bcolors.GREEN + bcolors.BOLD + f' every {update_database_interval} minutes' + bcolors.ENDC)
 
-    schedule.every(int(search_interval)).minutes.do(lambda: TweetSearcher(query, max_results).main())
+    schedule.every(int(search_interval)).seconds.do(lambda: TweetSearcher(query, max_results).main())
     schedule.every(int(analysis_interval)).minutes.do(lambda: TweetAnalyzer(connection).main())
     schedule.every(int(update_database_interval)).minutes.do(lambda: UpdateDatabase(connection).main())
 
