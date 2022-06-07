@@ -1,7 +1,8 @@
 import requests
 import os
 import json
-import datetime
+from log_custom import bcolors
+from datetime import datetime
 from dotenv import load_dotenv
 
 class TweetSearcher():
@@ -14,15 +15,15 @@ class TweetSearcher():
         self.query_params = {'query': query_parameters, 'tweet.fields': 'author_id,created_at,geo,in_reply_to_user_id,lang,possibly_sensitive,source', 'max_results': max_results}
 
     def bearer_oauth(self, r):
-        print(self.token)
         r.headers["Authorization"] = f"Bearer {self.token}"
         r.headers["User-Agent"] = "v2RecentSearchPython"
         r.headers["Content-Type"] = f"application/x-www-form-urlencoded;charset=UTF-8"
         return r
 
     def connect_to_endpoint(self, url, params):
+        print(bcolors.CYAN + f'{str(datetime.now())[:-7]} - [Twitter API]' + bcolors.ENDC + ' Request:', { 'url':url, 'params':params })
         response = requests.get(url, auth=self.bearer_oauth, params=params)
-        print(response.status_code)
+        print(bcolors.CYAN + f'{str(datetime.now())[:-7]} - [Twitter API]' + bcolors.ENDC + ' Response:', response)
         if response.status_code != 200:
             raise Exception(response.status_code, response.text)
         return response.json()
@@ -31,9 +32,9 @@ class TweetSearcher():
         json_response = self.connect_to_endpoint(self.search_url, self.query_params)
             
         tweets_reacheds = len(json_response.get('data'))
-        file_name = datetime.datetime.now().timestamp()
+        file_name = datetime.now().timestamp()
         if (tweets_reacheds > 0):
-            print(f'{tweets_reacheds} tweets foram encontrados')
-        f = open(f'../archives/{file_name}_PREPROCESSED_TWEETS.json', 'w')
+            print(bcolors.CYAN + f'{str(datetime.now())[:-7]} - [Twitter API]' + bcolors.ENDC + bcolors.PURPLE + bcolors.BOLD + f' {tweets_reacheds} tweets' + bcolors.ENDC + ' foram encontrados')
+        f = open(f'./archives/{file_name}_PREPROCESSED_TWEETS.json', 'w')
         f.write(str(json.dumps(json_response.get('data'), indent=20, sort_keys=True)))
         f.close
