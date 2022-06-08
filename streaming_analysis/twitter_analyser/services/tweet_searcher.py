@@ -1,12 +1,13 @@
 import requests
 import os
 import json
+import boto3
 from log_custom import bcolors
 from datetime import datetime
 from dotenv import load_dotenv
 
 class TweetSearcher():
-    def __init__(self, query_parameters = '#netflix OR #netflixbr', max_results = '100'):
+    def __init__(self, query_parameters = '', max_results = ''):
         load_dotenv()
         self.token = os.getenv('TOKEN')
         self.search_url = os.getenv('SEARCH_URL')
@@ -31,12 +32,15 @@ class TweetSearcher():
         json_response = self.connect_to_endpoint(self.search_url, self.query_params)
             
         for tweet in json_response.get('data'):
-            tweet.update({'content': self.film})
+            tweet.update({ 'content': self.film })
             
         tweets_reacheds = len(json_response.get('data'))
-        file_name = datetime.now().timestamp()
+        file_name = f'{datetime.now().timestamp()}_PREPROCESSED_TWEETS.json'
         if (tweets_reacheds > 0):
-            print(bcolors.CYAN + f'{str(datetime.now())[:-7]} - [Twitter API]' + bcolors.ENDC + bcolors.PURPLE + bcolors.BOLD + f' {tweets_reacheds} tweets' + bcolors.ENDC + ' foram encontrados')
-        f = open(f'./archives/{file_name}_PREPROCESSED_TWEETS.json', 'w')
-        f.write(str(json.dumps(json_response.get('data'), indent=20, sort_keys=True)))
-        f.close
+            print(bcolors.CYAN + f'{str(datetime.now())[:-7]} - [Twitter API]' + bcolors.ENDC + bcolors.PURPLE + bcolors.BOLD + f' {tweets_reacheds} tweets' + bcolors.ENDC + ' foram encontrados e salvos no arquivo ' + bcolors.PURPLE + bcolors.BOLD + file_name + bcolors.ENDC)
+
+            s3 = boto3.resource('s3')
+            s3.Bucket('mateus-streaming-analysis-sptech-bucket-tweets').put_object(Key=file_name, Body=str(json.dumps(json_response.get('data'), indent=2, sort_keys=True)))
+
+        else:
+            print(bcolors.CYAN + f'{str(datetime.now())[:-7]} - [Twitter API] Nenhum tweet foi encontrado.' + bcolors.ENDC)

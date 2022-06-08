@@ -1,15 +1,14 @@
 import os
-import json
 import time
-import moment
 import schedule
+import boto3
 from datetime import datetime
 from dotenv import load_dotenv
 from log_custom import bcolors
 from config.config_local import connection
 from utils.tweet_analyzer import TweetAnalyzer
 from services.tweet_searcher import TweetSearcher
-from services.update_database import UpdateDatabase
+from services.database_services import DatabaseServices
 
 load_dotenv()
 search_interval=os.getenv('TWEETS_SEARCH_MINUTES_INTERVAL')
@@ -26,7 +25,7 @@ class Main():
 
     schedule.every(int(search_interval)).minutes.do(lambda: TweetSearcher(query, max_results).main())
     schedule.every(int(analysis_interval)).minutes.do(lambda: TweetAnalyzer(connection).main())
-    schedule.every(int(update_database_interval)).minutes.do(lambda: UpdateDatabase(connection).main())
+    schedule.every(int(update_database_interval)).minutes.do(lambda: DatabaseServices(connection).main())
 
     while True:
         schedule.run_pending()
