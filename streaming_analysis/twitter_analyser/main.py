@@ -23,7 +23,7 @@ class Main():
     print(bcolors.GREEN + f'{str(datetime.now())[:-7]} - [Main]' + bcolors.ENDC + ' Tweet Analyzer will run' + bcolors.GREEN + bcolors.BOLD + f' every {analysis_interval} minutes' + bcolors.ENDC)
     print(bcolors.GREEN + f'{str(datetime.now())[:-7]} - [Main]' + bcolors.ENDC + ' Database Update will run' + bcolors.GREEN + bcolors.BOLD + f' every {update_database_interval} minutes' + bcolors.ENDC)
 
-    schedule.every(int(search_interval)).minutes.do(lambda: TweetSearcher(query, max_results).main())
+    schedule.every(int(search_interval)).seconds.do(lambda: TweetSearcher(query, max_results).main())
     schedule.every(int(analysis_interval)).minutes.do(lambda: TweetAnalyzer(connection).main())
     schedule.every(int(update_database_interval)).minutes.do(lambda: DatabaseServices(connection).main())
 
