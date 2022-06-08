@@ -2,7 +2,7 @@ CREATE DATABASE streaming;
 USE streaming;
 
 -- criando tabela de tweets
-CREATE TABLE SOCIAL_MEDIA (
+CREATE TABLE TWEET (
 	ID INT AUTO_INCREMENT PRIMARY KEY,
 	USER_MESSAGE VARCHAR(140),
     CREATED_AT DATE,
@@ -11,6 +11,16 @@ CREATE TABLE SOCIAL_MEDIA (
 	POSITIVE VARCHAR(100),
 	NEGATIVE VARCHAR(100),
 	NEUTRAL VARCHAR(100)
+);
+
+-- criando tabaela para armazenar os resultados das impressões de uma análise
+CREATE TABLE RATE_ANALYSIS (
+	ID INT AUTO_INCREMENT(1,1) PRIMARY KEY,
+	CONTENT VARCHAR(100),
+	IMPRESSIONS VARCHAR(100),
+	POSITIVE INT,
+	NEGATIVE INT,
+	NEUTRAL INT
 );
 
 -- criando tabela de títulos disponíveis para streaming na plataforma

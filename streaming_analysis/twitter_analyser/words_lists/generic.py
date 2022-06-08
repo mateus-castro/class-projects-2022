@@ -1,0 +1,22 @@
+generic_words_list = [
+    'what',
+    'when',
+    'where',
+    'on',
+    'at',
+    'the',
+    'for',
+    'in',
+    'get',
+    'got',
+    'do',
+    'me',
+    'i',
+    'you',
+    'u',
+    'we',
+    'they',
+    'he',
+    'she',
+    'it'
+]
